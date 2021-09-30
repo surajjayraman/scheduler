@@ -167,4 +167,11 @@ storiesOf("InterviewerListItem", module)
     .add("Create", () => <Form 
     interviewers={interviewers} 
     onSave={action('onSave')} 
-    onCancel={action('onCancel')} />);
+    onCancel={action('onCancel')} />)
+    .add("Edit", () => <Form 
+    name = {'Suraj'}
+    interviewers={interviewers} 
+    interviewer={2} 
+    onSave={action('onSave')} 
+    onCancel={action('onCancel')}
+    />);
