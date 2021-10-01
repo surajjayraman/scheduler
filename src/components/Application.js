@@ -5,54 +5,22 @@ import "components/Application.scss";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-
-// Mock Appointment Data
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm"
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Suraj Nair",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "4pm",
-  },
-];
+import getAppointmentsForDay from 'helpers/selectors';
 
 export default function Application(props) {
-  // render selected day
-  const [day, setDay] = useState("Monday");
+  // managing state by combining
+  const [state, setState] = useState({
+    day: 'Monday',
+    days: [],
+    appointments: {}
+  });
 
-  // Storing the Days Data
-  // receive Days data from api/days and set as days array
-  const [days, setDays] = useState([]);
+  // to to populate the appointments based on the day selected
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  // function to update the state of day
+  const setDay = day => setState({...state, day});
+  const setDays = days => setState(prev => ({...prev, days}));
 
   // GET request to /api/days using axios
   useEffect(() => {
@@ -66,15 +34,15 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
         <DayList 
-          days={days}
-          day={day}
+          days={state.days}
+          day={state.day}
           setDay={setDay}
           />
         </nav>
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" />        
       </section>
       <section className="schedule">
-        {appointments.map( appt => <Appointment key={appt.id} {...appt} />)}
+        {dailyAppointments.map( appt => <Appointment key={appt.id} {...appt} />)}
         <Appointment key="last" time="5pm"/>
       </section>
     </main>
