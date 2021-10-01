@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 import "components/Application.scss";
 
@@ -46,25 +47,18 @@ const appointments = [
 ];
 
 export default function Application(props) {
+  // render selected day
   const [day, setDay] = useState("Monday");
-  // mock days data
-  const days = [
-    {
-      id: 1,
-      name: "Monday",
-      spots: 2,
-    },
-    {
-      id: 2,
-      name: "Tuesday",
-      spots: 5,
-    },
-    {
-      id: 3,
-      name: "Wednesday",
-      spots: 0,
-    },
-  ];
+
+  // Storing the Days Data
+  // receive Days data from api/days and set as days array
+  const [days, setDays] = useState([]);
+
+  // GET request to /api/days using axios
+  useEffect(() => {
+    axios.get('/api/days').then(res => setDays(res.data))
+  }, []);
+
   return (
     <main className="layout">
       <section className="sidebar">        
