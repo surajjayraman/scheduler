@@ -36,9 +36,8 @@ export default function Application(props) {
   const setDay = day => setState({...state, day});
   //const setDays = days => setState(prev => ({...prev, days}));
 
-  // GET request to /api/days using axios
+  // GET requests to fetch days, appointments and interviewers.
   useEffect(() => {
-    //axios.get('/api/days').then(res => setDays(res.data))
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),

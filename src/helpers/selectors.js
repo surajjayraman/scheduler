@@ -3,11 +3,11 @@ export function getAppointmentsForDay(state, day) {
     const results = [];
   
     // 1. finding the object in our state.days whos name matches day
-    for (let dayOfArr of state.days) {
+    for (const dayOfArr of state.days) {
       if (dayOfArr.name === day ) {
         const appointmentArray = [...dayOfArr.appointments];
         // 2. access to appt array for the given day, we need to iterate through 
-        for(let appointment of appointmentArray) {
+        for(const appointment of appointmentArray) {
           // and compare where its id matches the id of states.appointments and return that
           if(state.appointments[appointment]) {
             results.push(state.appointments[appointment])
@@ -28,7 +28,7 @@ export function getAppointmentsForDay(state, day) {
     }
   
     // using the interviewers id find match in the interviewers list
-    for (let interviewer in state.interviewers) {
+    for (const interviewer in state.interviewers) {
       if (interview.interviewer === state.interviewers[interviewer].id) {
         const interviewerInfo = state.interviewers[interviewer]
         //construct the result object
