@@ -64,7 +64,7 @@ export default function Application(props) {
         <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" />        
       </section>
       <section className="schedule">
-        {dailyAppointments.map( appt => <Appointment key={appt.id} {...appt} />)}
+        {schedule}
         <Appointment key="last" time="5pm"/>
       </section>
     </main>
