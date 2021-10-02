@@ -40,9 +40,25 @@ export function getAppointmentsForDay(state, day) {
         return result;
       }
     }
-  } 
+  }
+  
+  export function getInterviewersForDay(state, day) {
+    // 1. finding the object in our state.days whos name matches day
+    const daySelected = state.days.find(eachDay => eachDay.name === day);
+  
+    // 2. validation - day does not exist, return []
+    if(!daySelected) {
+      return [];
+    }
+  
+    // 3. for each interviewer id in the array, use map to find the interviewer obj using the id as a key
+    const interviewers = daySelected.interviewers.map(interviewerId => state.interviewers[interviewerId]);
+  
+    return interviewers;
+  }
 
   export default {
       getAppointmentsForDay,
-      getInterview
+      getInterview,
+      getInterviewersForDay
   }
