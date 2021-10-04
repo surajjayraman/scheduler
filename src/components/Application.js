@@ -18,7 +18,7 @@ export default function Application(props) {
 
   // book an interview
   function bookInterview(id, interview) {
-    // Add appointment object
+    // add appointment object
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -30,7 +30,7 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    // Make data persistent
+    // make data persistent
     axios.put(`/api/appointments/${id}`, appointment).then(res => {
       console.log(res);
     })
@@ -38,6 +38,26 @@ export default function Application(props) {
     // call setState with new state object
     setState(prev => ({...prev, appointments: appointments}));
   }
+
+  // cancel an interview
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    }
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+
+    axios.delete(`/api/appointments/${id}`, appointment).then(res => {
+      console.log(res);
+    })
+
+    setState(prev => ({...prev, appointments: appointments}));
+  }
+
 
   
 
@@ -59,6 +79,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewersArr} 
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
