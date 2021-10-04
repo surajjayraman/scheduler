@@ -16,6 +16,11 @@ export default function Application(props) {
     interviewers: {}
   });
 
+  // book an interview
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
+
   // to to populate the appointments based on the day selected
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
@@ -33,6 +38,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewersArr} 
+        bookInterview={bookInterview}
       />
     );
   });
@@ -48,7 +54,6 @@ export default function Application(props) {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then((all) => {
-      console.log(all[1].data);
       setState(prev => ({...prev, days: all[0].data, appointments: {...all[1].data}, interviewers: all[2].data }));
     })
 
