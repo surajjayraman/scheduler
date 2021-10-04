@@ -18,7 +18,10 @@ export default function Application(props) {
 
   // book an interview
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
   }
 
   // to to populate the appointments based on the day selected
