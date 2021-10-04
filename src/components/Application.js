@@ -30,6 +30,11 @@ export default function Application(props) {
       [id]: appointment
     };
 
+    // Make data persistent
+    axios.put(`/api/appointments/${id}`, appointment).then(res => {
+      console.log(res);
+    })
+
     // call setState with new state object
     setState(prev => ({...prev, appointments: appointments}));
   }
