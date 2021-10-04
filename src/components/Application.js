@@ -31,12 +31,10 @@ export default function Application(props) {
     };
 
     // make data persistent
+    // call setState with new state object
     axios.put(`/api/appointments/${id}`, appointment).then(res => {
       console.log(res);
-    })
-
-    // call setState with new state object
-    setState(prev => ({...prev, appointments: appointments}));
+    }).then(setState(prev => ({...prev, appointments: appointments})));     
   }
 
   // cancel an interview
@@ -53,13 +51,9 @@ export default function Application(props) {
 
     axios.delete(`/api/appointments/${id}`, appointment).then(res => {
       console.log(res);
-    })
-
-    setState(prev => ({...prev, appointments: appointments}));
-  }
-
-
-  
+    }).then(setState(prev => ({...prev, appointments: appointments})));
+    
+  }  
 
   // to to populate the appointments based on the day selected
   const dailyAppointments = getAppointmentsForDay(state, state.day);
