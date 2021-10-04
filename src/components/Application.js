@@ -18,11 +18,23 @@ export default function Application(props) {
 
   // book an interview
   function bookInterview(id, interview) {
+    // Add appointment object
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
+
+    // update pattern to replace existing record with the matching id
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // call setState with new state object
+    setState(prev => ({...prev, appointments: appointments}));
   }
+
+  
 
   // to to populate the appointments based on the day selected
   const dailyAppointments = getAppointmentsForDay(state, state.day);
