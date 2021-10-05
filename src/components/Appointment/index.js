@@ -8,6 +8,7 @@ import Empty from 'components/Appointment/Empty';
 import Form from 'components/Appointment/Form';
 import Status from 'components/Appointment/Status';
 import Confirm from 'components/Appointment/Confirm';
+import Error from 'components/Appointment/Error';
 
 import "components/Appointment/styles.scss";
 
@@ -19,6 +20,8 @@ const SAVING = 'SAVING';
 const DELETING = 'DELETING';
 const CONFIRM = 'CONFIRM';
 const EDIT = 'EDIT';
+const ERROR_SAVE = 'ERROR_SAVE';
+const ERROR_DELETE = 'ERROR_DELETE';
 
 export default function Appointment(props) {
   // call useVisualMode Hook
@@ -33,7 +36,11 @@ export default function Appointment(props) {
 
     // show the SAVING indicator before calling props.bookInterview
     transition(SAVING);
-    props.bookInterview(props.id, interview).then(() => transition(SHOW));
+    //props.bookInterview(props.id, interview).then(() => transition(SHOW));
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((err)=> transition(ERROR_SAVE, true));
     
   }
 
@@ -77,6 +84,7 @@ export default function Appointment(props) {
             {mode === CONFIRM && <Confirm message={'Are you sure you would like to delete?'} onCancel={() => back()} onConfirm={removeAppt}/>}
             {mode === EDIT && (<Form interviewers={props.interviewers} onCancel={()=> back()} onSave={edit}  
               name={props.interview.student} interviewer={props.interview.interviewer.id} />)}
+            {mode === ERROR_SAVE && <Error message={'Error - could not save '} onClose={() => back()}/> }  
             
         </article>
     );
