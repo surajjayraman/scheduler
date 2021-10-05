@@ -53,7 +53,25 @@ export default function Application(props) {
       console.log(res);
     }).then(setState(prev => ({...prev, appointments: appointments})));
     
-  }  
+  }
+  
+  // edit an Interview
+  function editInterview(id, interview) {
+    console.log('was this function called?');
+    const appointment = {
+      ...state.appointments[id],
+      interview: {...interview}
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+   
+    axios.put(`/api/appointments/${id}`, appointment).then(res => {
+      console.log(res)
+    }).then(setState(prev => ({...prev, appointments: appointments})));
+  }
 
   // to to populate the appointments based on the day selected
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -74,6 +92,7 @@ export default function Application(props) {
         interviewers={interviewersArr} 
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
+        editInterview={editInterview}
       />
     );
   });
