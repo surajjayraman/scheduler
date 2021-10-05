@@ -32,9 +32,9 @@ export default function Application(props) {
 
     // make data persistent
     // call setState with new state object
-    return axios.put(`/api/appointments/${id}`, appointment).then(res => {
-      console.log(res);
-    }).then(setState(prev => ({...prev, appointments: appointments})));     
+    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
+      setState(prev => ({...prev, appointments: appointments}));      
+    });
   }
 
   // cancel an interview
@@ -49,15 +49,15 @@ export default function Application(props) {
       [id]: appointment
     }
 
-    return axios.delete(`/api/appointments/${id}`, appointment).then(res => {
-      console.log(res);
-    }).then(setState(prev => ({...prev, appointments: appointments})));
+    return axios.delete(`/api/appointments/${id}`, appointment).then(() => {
+      setState(prev => ({...prev, appointments: appointments}));      
+    });
     
   }
   
   // edit an Interview
   function editInterview(id, interview) {
-    console.log('was this function called?');
+    
     const appointment = {
       ...state.appointments[id],
       interview: {...interview}
@@ -68,9 +68,9 @@ export default function Application(props) {
       [id]: appointment
     };
    
-    return axios.put(`/api/appointments/${id}`, appointment).then(res => {
-      console.log(res)
-    }).then(setState(prev => ({...prev, appointments: appointments})));
+    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
+      setState(prev => ({...prev, appointments: appointments}));      
+    });
   }
 
   // to to populate the appointments based on the day selected
