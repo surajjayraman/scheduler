@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// returns an object with keys => state, setDay, bookInterview,
+// cancelInterview, editInterview
 export default function useApplicationData() {
 // transferred over from application js
 
@@ -14,6 +16,18 @@ export default function useApplicationData() {
 
   // function to update the state of day
   const setDay = day => setState({...state, day});
+
+  // update the spots based on interview exists or not
+  function updateSpots(interview){
+    // find the dayObj based on day selected
+    const dayObj = state.days.find(eachDay => eachDay.name === state.day)
+    // update spots according to appointment.interview
+    interview ? dayObj.spots -= 1 : dayObj.spots += 1
+    // create a new days obj to be updated with setState
+    const days = [...state.days]
+    days[dayObj.id - 1] = dayObj
+    return days
+  }
 
   // book an Interview appointment
   function bookInterview(id, interview) {
@@ -29,10 +43,13 @@ export default function useApplicationData() {
       [id]: appointment
     }
 
+    // implements the spots remaining feature
+    const days = updateSpots(appointment.interview);
+
     // make data persistent
     // call setState with new state object
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
-      setState(prev => ({...prev, appointments: appointments}))
+      setState(prev => ({...prev, appointments: appointments, days: days}));
     })
   }
 
