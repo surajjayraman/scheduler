@@ -1,77 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import React from "react";
 
 import "components/Application.scss";
 
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
+
+import useApplicationData from 'hooks/useApplicationData';
 import {getAppointmentsForDay, getInterview, getInterviewersForDay} from 'helpers/selectors';
 
 export default function Application(props) {
-  // managing state by combining
-  const [state, setState] = useState({
-    day: 'Monday',
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
-
-  // book an interview
-  function bookInterview(id, interview) {
-    // add appointment object
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    // update pattern to replace existing record with the matching id
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    // make data persistent
-    // call setState with new state object
-    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
-      setState(prev => ({...prev, appointments: appointments}));      
-    });
-  }
-
-  // cancel an interview
-  function cancelInterview(id) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    }
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    }
-
-    return axios.delete(`/api/appointments/${id}`, appointment).then(() => {
-      setState(prev => ({...prev, appointments: appointments}));      
-    });
-    
-  }
-  
-  // edit an Interview
-  function editInterview(id, interview) {
-    
-    const appointment = {
-      ...state.appointments[id],
-      interview: {...interview}
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-   
-    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
-      setState(prev => ({...prev, appointments: appointments}));      
-    });
-  }
+  // The custom hook useApplicationData will be responsible
+  // for loading the initial data from the API
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview,
+    editInterview
+  } = useApplicationData();  
 
   // to to populate the appointments based on the day selected
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -97,22 +43,6 @@ export default function Application(props) {
     );
   });
 
-  // function to update the state of day
-  const setDay = day => setState({...state, day});
-  //const setDays = days => setState(prev => ({...prev, days}));
-
-  // GET requests to fetch days, appointments and interviewers.
-  useEffect(() => {
-    Promise.all([
-      axios.get('/api/days'),
-      axios.get('/api/appointments'),
-      axios.get('/api/interviewers')
-    ]).then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: {...all[1].data}, interviewers: all[2].data }));
-    })
-
-  }, []);
-
   return (
     <main className="layout">
       <section className="sidebar">        
@@ -125,7 +55,7 @@ export default function Application(props) {
           setDay={setDay}
           />
         </nav>
-        <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="" />        
+        <img className="sidebar__lhl sidebar--centered" src="images/lhl.png" alt="Lighthouse Labs" />        
       </section>
       <section className="schedule">
         {schedule}
