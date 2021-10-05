@@ -36,7 +36,7 @@ export default function Appointment(props) {
 
     // show the SAVING indicator before calling props.bookInterview
     transition(SAVING);
-    //props.bookInterview(props.id, interview).then(() => transition(SHOW));
+    // transition to mode based on the Promise resolve / reject
     props
       .bookInterview(props.id, interview)
       .then(() => transition(SHOW))
@@ -47,7 +47,11 @@ export default function Appointment(props) {
   // delete appointment
   function removeAppt() {
     transition(DELETING);
-    props.cancelInterview(props.id).then(() => transition(EMPTY));
+     // transition to mode based on the Promise resolve / reject
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch((err) => transition(ERROR_DELETE, true));
     
   }
 
@@ -59,7 +63,11 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    props.editInterview(props.id, interview).then(() => transition(SHOW));
+    // transition to show / error mode based on the Promise resolve / reject
+    props
+      .editInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((err)=> transition(ERROR_SAVE, true));
     
   }
 
@@ -85,6 +93,7 @@ export default function Appointment(props) {
             {mode === EDIT && (<Form interviewers={props.interviewers} onCancel={()=> back()} onSave={edit}  
               name={props.interview.student} interviewer={props.interview.interviewer.id} />)}
             {mode === ERROR_SAVE && <Error message={'Error - could not save '} onClose={() => back()}/> }  
+            {mode === ERROR_DELETE && <Error message={'Error - could not delete '} onClose={() => back()}/> }
             
         </article>
     );
