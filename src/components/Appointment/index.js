@@ -45,8 +45,8 @@ export default function Appointment(props) {
   }
 
   // delete appointment
-  function removeAppt() {
-    transition(DELETING);
+  function removeAppt(event) {
+    transition(DELETING, true);
      // transition to mode based on the Promise resolve / reject
     props
       .cancelInterview(props.id)
@@ -92,8 +92,8 @@ export default function Appointment(props) {
             {mode === CONFIRM && <Confirm message={'Are you sure you would like to delete?'} onCancel={() => back()} onConfirm={removeAppt}/>}
             {mode === EDIT && (<Form interviewers={props.interviewers} onCancel={()=> back()} onSave={edit}  
               name={props.interview.student} interviewer={props.interview.interviewer.id} />)}
-            {mode === ERROR_SAVE && <Error message={'Error - could not save '} onClose={() => back()}/> }  
-            {mode === ERROR_DELETE && <Error message={'Error - could not delete '} onClose={() => back()}/> }
+            {mode === ERROR_SAVE && <Error message={'Error - could not save the appointment. '} onClose={() => back()}/> }  
+            {mode === ERROR_DELETE && <Error message={'Error - could not cancel the appointment. '} onClose={() => back()}/> }
             
         </article>
     );
