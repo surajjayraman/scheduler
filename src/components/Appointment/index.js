@@ -33,15 +33,15 @@ export default function Appointment(props) {
 
     // show the SAVING indicator before calling props.bookInterview
     transition(SAVING);
-    props.bookInterview(props.id, interview);
-    transition(SHOW);
+    props.bookInterview(props.id, interview).then(() => transition(SHOW));
+    
   }
 
   // delete appointment
   function removeAppt() {
     transition(DELETING);
-    props.cancelInterview(props.id)
-    transition(EMPTY);
+    props.cancelInterview(props.id).then(() => transition(EMPTY));
+    
   }
 
   // edit an appointment
@@ -52,9 +52,8 @@ export default function Appointment(props) {
     };
 
     transition(SAVING);
-    props.editInterview(props.id, interview)
-    transition(SHOW);
-
+    props.editInterview(props.id, interview).then(() => transition(SHOW));
+    
   }
 
     return (

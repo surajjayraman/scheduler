@@ -32,7 +32,7 @@ export default function Application(props) {
 
     // make data persistent
     // call setState with new state object
-    axios.put(`/api/appointments/${id}`, appointment).then(res => {
+    return axios.put(`/api/appointments/${id}`, appointment).then(res => {
       console.log(res);
     }).then(setState(prev => ({...prev, appointments: appointments})));     
   }
@@ -49,7 +49,7 @@ export default function Application(props) {
       [id]: appointment
     }
 
-    axios.delete(`/api/appointments/${id}`, appointment).then(res => {
+    return axios.delete(`/api/appointments/${id}`, appointment).then(res => {
       console.log(res);
     }).then(setState(prev => ({...prev, appointments: appointments})));
     
@@ -68,7 +68,7 @@ export default function Application(props) {
       [id]: appointment
     };
    
-    axios.put(`/api/appointments/${id}`, appointment).then(res => {
+    return axios.put(`/api/appointments/${id}`, appointment).then(res => {
       console.log(res)
     }).then(setState(prev => ({...prev, appointments: appointments})));
   }
