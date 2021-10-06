@@ -1,4 +1,4 @@
-describe("Appointment", () => {
+describe("Appointments", () => {
 
     beforeEach(() => {
       cy.request('GET','/api/debug/reset')
@@ -19,5 +19,8 @@ describe("Appointment", () => {
        
       cy.contains('Save')
         .click();  
+      
+      cy.contains('.appointment__card--show', 'Lydia Miller-Jones');
+      cy.contains('.appointment__card--show', 'Sylvia Palmer');
     });
 }); 
