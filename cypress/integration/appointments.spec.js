@@ -16,5 +16,8 @@ describe("Appointment", () => {
         
       cy.get('[alt="Sylvia Palmer"]')
         .click();  
+       
+      cy.contains('Save')
+        .click();  
     });
 }); 
