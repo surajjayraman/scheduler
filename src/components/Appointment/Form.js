@@ -44,9 +44,8 @@ export default function Form(props) {
                     type="text"
                     placeholder="Enter Student Name"
                     value = {name}
-                    /*
-                    This must be a controlled component
-                    */
+                    data-testid="student-name-input"
+                    
                 />
                 </form>
                 <section className="appointment__validation">{error}</section>
