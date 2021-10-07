@@ -1,4 +1,7 @@
 # Interview Scheduler
+Using the latest tools and techniques to build a single page application using React. This modern client application allows users to book and cancel interviews.
+
+## Screenshots
 
 ## Setup
 
