@@ -5,6 +5,20 @@ Using the latest tools and techniques to build a single page application using R
 !["Landing Page"](https://github.com/surajjayraman/scheduler/blob/master/docs/scheduler-home.png?raw=true)
 !["Book an Appointment"](https://github.com/surajjayraman/scheduler/blob/master/docs/appointment-form.png?raw=true)
 
+## Technical Specifications
+* React
+* Webpack, Babel
+* Axios
+* Storybook, Webpack Dev Server, Jest, Testing Library
+* Scheduler client app created using Create React App
+* Scheduler API server using Express
+
+## Testing
+The testing process followed through the development on the project includes best practices in:
+* Unit testing
+* Integration testing
+* End to End testing
+
 ## Setup
 
 Install dependencies with `npm install`.
