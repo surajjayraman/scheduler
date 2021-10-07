@@ -2,6 +2,7 @@
 Using the latest tools and techniques to build a single page application using React. This modern client application allows users to book and cancel interviews.
 
 ## Screenshots
+!["Book an Appointment"](https://github.com/surajjayraman/scheduler/blob/master/docs/appointment-form.png?raw=true)
 
 ## Setup
 
